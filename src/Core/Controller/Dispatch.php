@@ -6,7 +6,7 @@ class Dispatch
     
     static public function dispatcher($request)
     {
-        $controllerName = 'Application\\Controller\\'.$request['controller'];
+        $controllerName = $request['module'].'\\Controller\\'.$request['controller'];
         $actionName = $request['action'];
         $controller = new $controllerName();
         $view = $controller->$actionName();

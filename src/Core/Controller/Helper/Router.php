@@ -47,26 +47,14 @@ class Router
     
     static public function parseUrl($url, $router)
     {
-        $controller = array(
-            'users' => array(
-                'insert',
-                'update',
-                'delete',
-                'select'
-            ),
-            'crud' => array(
-                'insert',
-                'update',
-                'delete',
-                'select'
-            )
-        );
-         
+        $actions = get_class_methods($router['module']."\\Controller\\".$router['controller']);
+        
+//          die;
         // Descomponer la url
         $components = explode('/', $url);
          
         // Determinar el controlador
-        if(file_exists(APPLICATION_PATH."/src/Application/Controller/".$components[1].".php"))
+        if(file_exists(MODULE_PATH."/".$router['module']."/src/".$router['module']."/Controller/".$router['controller'].".php"))
             $array['controller'] = $router['controller'];
         else if(isset($components[1]))
             $array['controller'] = 'error';
@@ -77,11 +65,11 @@ class Router
             // Determinar la accion
             if (isset($components[2]))
             {
-                if(in_array($components[2], $controller[$components[1]]))
-                    $array['action'] = $components[2];
+                if(in_array($components[2]."Action", $actions))
+                    $array['action'] = $components[2]."Action";
                 else {
                     $array['controller'] = 'error';
-                    $array['action'] = 404;
+                    $array['action'] = '404Action';
                 }
                  
                 if (isset($components[3]))
@@ -89,23 +77,23 @@ class Router
                     // Si el número de parametros es impar
                     if (count($components) > 3 && count($components) % 2 == 0) {
                         $array['controller'] = 'error';
-                        $array['action'] = '400';
+                        $array['action'] = '400Action';
                         $array['params'] = null;
                     }
                     else {
                         // Comprobar si existe controlador
-                        $existcontroller = false;
-                        foreach ($controller as $key => $value) {
-                            if (($array['controller'] == $key))
+//                         $existcontroller = false;
+//                         foreach ($controller as $key => $value) {
+//                             if (($array['controller'] == $key))
                                 $existcontroller = true;
-                        }
+//                         }
                         // Si existe controlador
                         if ($existcontroller) {
                             // Comprobar si existe accion
                              
-                            if (! in_array($array['action'], $controller[$array['controller']])) {
+                            if (! in_array($array['action'], $router['controller'])) {
                                 $array['controller'] = 'error';
-                                $array['action'] = '404';
+                                $array['action'] = '404Action';
                                 $array['params'] = null;
                             }
                             else // Existe accion en el controlador
@@ -121,7 +109,7 @@ class Router
                         }
                         else {
                             $array['controller'] = 'error';
-                            $array['action'] = '404';
+                            $array['action'] = '404Action';
                             $array['params'] = null;
                         }
                     }
@@ -136,17 +124,16 @@ class Router
             }
             else 
             {
-                $array['action'] = 'index';
+                $array['action'] = 'indexAction';
             }
              
         }
         else {
             $array['controller'] = 'index';
-            $array['action'] = 'index';
+            $array['action'] = 'indexAction';
             $array['params'] = null;
         }
         
-         
         return $array;
     }
 }
