@@ -49,7 +49,7 @@ class Router
     {
         $actions = get_class_methods($router['module']."\\Controller\\".$router['controller']);
         
-//          die;
+
         // Descomponer la url
         $components = explode('/', $url);
          
@@ -91,7 +91,7 @@ class Router
                         if ($existcontroller) {
                             // Comprobar si existe accion
                              
-                            if (! in_array($array['action'], $router['controller'])) {
+                            if (! in_array($array['action'], $actions)) {
                                 $array['controller'] = 'error';
                                 $array['action'] = '404Action';
                                 $array['params'] = null;
@@ -133,6 +133,7 @@ class Router
             $array['action'] = 'indexAction';
             $array['params'] = null;
         }
+        
         
         return $array;
     }

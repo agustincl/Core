@@ -232,7 +232,9 @@ function renderForm($formDefinition, $action, $method='post', $data = array())
     			     break;
     		case 'submit':
     		     //necesitamos un boton para enviar los datos a procesa.php
-    			 $html.="<input type=\"submit\" name=\"".$value2."\"/>"."\n";
+    		     
+    		
+    			 $html.="<input type=\"submit\" name=\"".$value['label']."\"/>"."\n";
     			 break;
                
                  

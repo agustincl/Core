@@ -8,7 +8,7 @@ class Dispatch
     {
         $controllerName = $request['module'].'\\Controller\\'.$request['controller'];
         $actionName = $request['action'];
-        $controller = new $controllerName();
+        $controller = new $controllerName($request);
         $view = $controller->$actionName();
         
         $layout = $controller->layout;
