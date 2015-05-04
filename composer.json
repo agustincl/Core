@@ -23,7 +23,7 @@
     
     "autoload": {
         "psr-0": {
-            "acl\Core\\": "src/"
+            "acl\\Core\\": "src/"
         }
     }
 }
