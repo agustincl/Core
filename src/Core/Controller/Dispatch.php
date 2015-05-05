@@ -1,14 +1,24 @@
 <?php
 namespace acl\Core\Controller;
 
+use acl\Core\Options\OptionsAwareInterface;
 class Dispatch
 {
     
     static public function dispatcher($request)
     {
+        
+        $moduleName = $request['module']."\Module";
+        $options = $moduleName::getInstance()->options;
+        
         $controllerName = $request['module'].'\\Controller\\'.$request['controller'];
         $actionName = $request['action'];
+        
         $controller = new $controllerName($request);
+        
+        if($controller instanceof OptionsAwareInterface)
+            $controller->setOptions($options);
+        
         $view = $controller->$actionName();
         
         $layout = $controller->layout;

@@ -44,45 +44,18 @@ class ModuleManager
                 $moduleName = $module."\Module";
                 $module = $moduleName::getInstance();
                 $module->options = $moduleOptions;
-                
-                
-                echo "<pre>";
-                print_r($module);
-                echo "</pre>";
+                                
+//                 echo "<pre>";
+//                 print_r($module);
+//                 echo "</pre>";
             }
              
-//             $moduleConfigs[$module]=$moduleOptions;
-            
-            
-            // Instanciar Module
-            
-            
-//             $module = new $moduleName();
-            
-            
         }
-        
-        
-        // merge con Options
-        
-//         echo "<pre>";
-//         print_r($module);
-//         echo "</pre>";
-        
-        echo "<pre>";
-        print_r($moduleConfigs);
-        echo "</pre>";
-        
-        
         
         
             
     }
     
-    
-    
-    
-   
     
     
 }
