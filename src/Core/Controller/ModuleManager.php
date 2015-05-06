@@ -11,7 +11,8 @@ class ModuleManager
         $moduleConfigs=[];
         foreach ($config as $module)
         {
-           
+            $global = [];
+            $local = [];
             $globalName = ROOT_PATH.'/configs/autoload/'.strtolower(str_replace('\\', ".", $module).'.global.php');
             $localName = ROOT_PATH.'/configs/autoload/'.strtolower(str_replace('\\', ".", $module).'.local.php');
             
@@ -35,6 +36,7 @@ class ModuleManager
             if(class_exists($moduleOptionsName))
             {
                 $moduleOptions = new $moduleOptionsName();
+                
                 foreach ($options as $key => $value)
                 {
                     $methodName = 'set'.$key;
