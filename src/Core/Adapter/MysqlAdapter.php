@@ -1,6 +1,8 @@
 <?php
 namespace acl\Core\Adapter;
 
+use Timeline\Exception\TimelineException;
+
 class MysqlAdapter
 {
     protected $link;
@@ -16,16 +18,30 @@ class MysqlAdapter
     private function connect()
     {
         // Conectarse al DBMS
-        $this->link = mysqli_connect($this->config['host'],
-            $this->config['user'],
-            $this->config['password']
-        );
+        
+            $this->link = mysqli_connect($this->config['host'],
+                $this->config['user'],
+                $this->config['password']
+            );
+        
+               
+        
     }
     
     private function selectDb()
     {
         // Seleccionar la DB
         mysqli_select_db($this->link, $this->config['database']);
+//         try
+//         {
+//             throw new TimelineException();
+            
+//         } catch (TimelineException $e) {
+        
+       
+//         }
+        
+        
     }
     
     public function query($query)

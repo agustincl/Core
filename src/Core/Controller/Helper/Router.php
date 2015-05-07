@@ -18,6 +18,16 @@ class Router
         
         $url =  explode("/",$url);
         
+        
+//         if(!file_exists(MODULE_PATH."/".$routes[$url[1]]['module']."/src/".
+//                             $routes[$url[1]]['module']."/Controller/".
+//                             $routes[$url[1]]['controller'].".php"))
+//         {
+//             return array('module' => 'Application', 
+//                      'controller' => 'Error');
+//         }
+            
+        
         if(!array_key_exists($url[1],$routes))
             return array('module' => 'Application',
                          'controller' => 'Error');
@@ -54,10 +64,16 @@ class Router
         $components = explode('/', $url);
          
         // Determinar el controlador
-        if(file_exists(MODULE_PATH."/".$router['module']."/src/".$router['module']."/Controller/".$router['controller'].".php"))
+        if(file_exists(MODULE_PATH."/".$router['module']."/src/".
+                                        $router['module']."/Controller/".
+                                        $router['controller'].".php"))
             $array['controller'] = $router['controller'];
         else if(isset($components[1]))
+        {
             $array['controller'] = 'error';
+            $array['controller'] = 'e404Action';
+        }
+            
     
          
         if ($components[1] != "")
@@ -69,7 +85,7 @@ class Router
                     $array['action'] = $components[2]."Action";
                 else {
                     $array['controller'] = 'error';
-                    $array['action'] = '404Action';
+                    $array['action'] = 'e404Action';
                 }
                  
                 if (isset($components[3]))
@@ -77,7 +93,7 @@ class Router
                     // Si el número de parametros es impar
                     if (count($components) > 3 && count($components) % 2 == 0) {
                         $array['controller'] = 'error';
-                        $array['action'] = '400Action';
+                        $array['action'] = 'e400Action';
                         $array['params'] = null;
                     }
                     else {
@@ -93,7 +109,7 @@ class Router
                              
                             if (! in_array($array['action'], $actions)) {
                                 $array['controller'] = 'error';
-                                $array['action'] = '404Action';
+                                $array['action'] = 'e404Action';
                                 $array['params'] = null;
                             }
                             else // Existe accion en el controlador
@@ -109,7 +125,7 @@ class Router
                         }
                         else {
                             $array['controller'] = 'error';
-                            $array['action'] = '404Action';
+                            $array['action'] = 'e404Action';
                             $array['params'] = null;
                         }
                     }
